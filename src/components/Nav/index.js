@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
-
 import { capitalizeFirstLetter } from '../../utils/helpers';
 
 function Nav(props) {
   const {
     categories = [],
     setCurrentCategory,
-    currentCategory,
     contactSelected,
-    setContactSelected
+    currentCategory,
+    setContactSelected,
   } = props;
 
   useEffect(() => {
@@ -30,20 +29,23 @@ function Nav(props) {
             </a>
           </li>
           <li className={`mx-2 ${contactSelected && 'navActive'}`}>
-          <span onClick={() => setContactSelected(true)}>Contact</span>
+            <span onClick={() => setContactSelected(true)}>Contact</span>
           </li>
           {categories.map((category) => (
             <li
               className={`mx-1 ${
-                currentCategory.name === category.name && 'navActive'
+                currentCategory.name === category.name && !contactSelected && 'navActive'
                 }`}
               key={category.name}
             >
-          <span onClick={() => {
-    setCurrentCategory(category);
-    setContactSelected(false);
-  }}
-></span>
+              <span
+                onClick={() => {
+                  setCurrentCategory(category);
+                  setContactSelected(false);
+                }}
+              >
+                {capitalizeFirstLetter(category.name)}
+              </span>
             </li>
           ))}
         </ul>
